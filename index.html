@@ -1,0 +1,2785 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+  <!-- SÉCURITÉ : Content Security Policy (CSP) -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https: data:;">
+  
+  <title>Technological and Language Center</title>
+
+  <!-- Police Montserrat (ExtraBold 800 & Medium 500/600) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================
+       1. VARIABLES GLOBALES ET TYPOGRAPHIE
+       ========================================== */
+    :root {
+      --primary-red: #a10715;       /* Rouge principal */
+      --primary-red-hover: #800510; /* Rouge foncé au survol */
+      --bg-white: #ffffff;          /* Blanc principal */
+      --bg-light: #f8fafc;          /* Fond clair */
+      --text-dark: #0f172a;         /* Texte sombre */
+      --text-muted: #64748b;        /* Texte secondaire */
+      --border-color: #e2e8f0;      /* Bordures */
+      --radius: 12px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1);
+      --shadow-lg: 0 10px 25px -5px rgba(0,0,0,0.2);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 500;
+      color: var(--text-dark);
+      background-color: var(--bg-white);
+      line-height: 1.6;
+    }
+
+    h1, h2, h3, .logo-text, .section-title, .modal-title, .page-title, .slide-title, .welcome-title {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+    }
+
+    /* SYSTEME MULTI-PAGES (SPA) */
+    .page {
+      display: none;
+      width: 100%;
+      min-height: 100vh;
+      animation: fadeIn 0.25s ease-in-out;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .secondary-page-content {
+      padding: 80px 20px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .page-title {
+      font-size: 2.5rem;
+      color: var(--primary-red);
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    .page-description {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      max-width: 650px;
+      margin: 0 auto 30px auto;
+      text-align: center;
+    }
+
+    .btn-return {
+      background: transparent;
+      color: var(--primary-red);
+      border: 2px solid var(--primary-red);
+      padding: 10px 24px;
+      border-radius: 25px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .btn-return:hover {
+      background: var(--primary-red);
+      color: #ffffff;
+    }
+
+    /* ==========================================
+       BOUTONS FLOTTANTS RÉSEAUX SOCIAUX
+       ========================================== */
+    .floating-actions {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      z-index: 9999;
+      align-items: center;
+    }
+
+    .floating-btn {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.22);
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .floating-btn svg {
+      width: 24px;
+      height: 24px;
+      fill: #ffffff;
+    }
+
+    .floating-btn:hover {
+      transform: scale(1.12) translateY(-3px);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.35);
+    }
+
+    .btn-scroll-top {
+      background-color: var(--primary-red);
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    .btn-facebook { background-color: #1877f2; }
+    .btn-instagram { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285aebe6 90%); }
+    
+    .btn-whatsapp {
+      background-color: #25d366;
+      position: relative;
+    }
+
+    .btn-whatsapp::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 2px solid #25d366;
+      animation: pulseWave 2s infinite;
+    }
+
+    @keyframes pulseWave {
+      0% { transform: scale(1); opacity: 0.8; }
+      100% { transform: scale(1.5); opacity: 0; }
+    }
+
+    /* ==========================================
+       BLOC 1 : BARRE D'ANNONCE & HEADER
+       ========================================== */
+    .top-bar {
+      background-color: var(--primary-red);
+      color: #ffffff;
+      padding: 10px 0;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .top-bar .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .top-bar-tagline {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      letter-spacing: 0.3px;
+    }
+
+    .btn-aula {
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      color: #ffffff;
+      padding: 6px 18px;
+      border-radius: 20px;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 700;
+      transition: all 0.25s ease;
+      background: transparent;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-aula:hover {
+      background: #ffffff;
+      color: var(--primary-red);
+    }
+
+    .main-header {
+      background: #ffffff;
+      box-shadow: var(--shadow-sm);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 20px;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+    }
+
+    .logo-text {
+      font-size: 1.15rem;
+      color: var(--primary-red);
+      line-height: 1.1;
+      text-transform: uppercase;
+      letter-spacing: -0.5px;
+    }
+
+    .logo-subtext {
+      font-size: 0.65rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      display: block;
+      letter-spacing: 0.5px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-dark);
+      font-weight: 600;
+      font-size: 0.9rem;
+      padding: 6px 8px;
+      transition: color 0.2s ease;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0%;
+      height: 2px;
+      background-color: var(--primary-red);
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary-red);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .icon-btn {
+      width: 40px;
+      height: 40px;
+      min-width: 40px;
+      min-height: 40px;
+      border-radius: 50%;
+      background: var(--bg-light);
+      border: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--text-dark);
+      transition: all 0.2s ease;
+    }
+
+    .icon-btn:hover {
+      background: var(--primary-red);
+      color: #ffffff;
+      border-color: var(--primary-red);
+    }
+
+    .icon-btn svg {
+      width: 20px;
+      height: 20px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+    }
+
+    .btn-login {
+      border: 2px solid var(--primary-red);
+      color: var(--primary-red);
+      background: transparent;
+      padding: 8px 20px;
+      border-radius: 25px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-login:hover {
+      background: var(--primary-red);
+      color: #ffffff;
+    }
+
+    .btn-inscribete {
+      background: var(--primary-red);
+      color: #ffffff;
+      border: none;
+      padding: 10px 22px;
+      border-radius: 25px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .btn-inscribete:hover {
+      background: var(--primary-red-hover);
+    }
+
+    .mobile-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--text-dark);
+    }
+
+    /* ==========================================
+       BLOC 2 : HERO SLIDER
+       ========================================== */
+    .hero-slider {
+      position: relative;
+      width: 100%;
+      height: 520px;
+      overflow: hidden;
+      background-color: #0f172a;
+    }
+
+    .slider-container {
+      display: flex;
+      width: 300%;
+      height: 100%;
+      transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .slide {
+      width: 33.333%;
+      height: 100%;
+      position: relative;
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: center;
+    }
+
+    .slide-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, rgba(15, 23, 42, 0.9) 0%, rgba(15, 23, 42, 0.55) 60%, rgba(15, 23, 42, 0.15) 100%);
+      z-index: 1;
+    }
+
+    .slide-content {
+      position: relative;
+      z-index: 2;
+      max-width: 680px;
+      color: #ffffff;
+      padding: 0 40px;
+    }
+
+    .badge-tag {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(8px);
+      color: #ffffff;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .slide-title {
+      font-size: 3rem;
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 16px;
+      color: #ffffff;
+    }
+
+    .slide-description {
+      font-size: 1.05rem;
+      line-height: 1.6;
+      color: #e2e8f0;
+      margin-bottom: 30px;
+      font-weight: 500;
+    }
+
+    .btn-conoce-mas {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background-color: var(--primary-red);
+      color: #ffffff;
+      padding: 14px 32px;
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 1rem;
+      border: none;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      box-shadow: 0 4px 15px rgba(161, 7, 21, 0.4);
+    }
+
+    .btn-conoce-mas:hover {
+      background-color: var(--primary-red-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(161, 7, 21, 0.6);
+    }
+
+    .slider-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      color: #ffffff;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      transition: all 0.2s ease;
+    }
+
+    .slider-arrow:hover {
+      background: rgba(255, 255, 255, 0.45);
+      transform: translateY(-50%) scale(1.08);
+    }
+
+    .arrow-prev { left: 25px; }
+    .arrow-next { right: 25px; }
+
+    .slider-dots {
+      position: absolute;
+      bottom: 25px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 10px;
+      z-index: 10;
+      background: rgba(0, 0, 0, 0.35);
+      padding: 6px 14px;
+      border-radius: 20px;
+      backdrop-filter: blur(4px);
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.45);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .dot.active {
+      width: 28px;
+      border-radius: 10px;
+      background: var(--primary-red);
+    }
+
+    /* ==========================================
+       BLOC 3 : PRESENTACIÓN (WELCOME)
+       ========================================== */
+    .welcome-section {
+      padding: 80px 0;
+      background-color: var(--bg-white);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .welcome-content {
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .welcome-subtitle {
+      color: var(--primary-red);
+      font-weight: 800;
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .welcome-title {
+      font-size: 2.3rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      line-height: 1.25;
+      margin-bottom: 24px;
+    }
+
+    .welcome-text {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+      font-weight: 500;
+    }
+
+    .welcome-text strong {
+      color: var(--text-dark);
+      font-weight: 700;
+    }
+
+    /* ==========================================
+       BLOC 4 : PROGRAMAS ACADÉMICOS
+       ========================================== */
+    .programs-section {
+      padding: 80px 0;
+      background-color: var(--bg-light);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .programs-header {
+      text-align: center;
+      margin-bottom: 45px;
+    }
+
+    .programs-subtitle {
+      color: var(--primary-red);
+      font-weight: 800;
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .programs-title {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--text-dark);
+    }
+
+    .programs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .program-card {
+      position: relative;
+      height: 380px;
+      border-radius: 16px;
+      overflow: hidden;
+      background-size: cover;
+      background-position: center;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-md);
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .program-card-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(180deg, rgba(15, 23, 42, 0.4) 0%, rgba(15, 23, 42, 0.82) 100%);
+      transition: background 0.35s ease;
+    }
+
+    .program-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .program-card:hover .program-card-overlay {
+      background: linear-gradient(180deg, rgba(161, 7, 21, 0.5) 0%, rgba(15, 23, 42, 0.92) 100%);
+    }
+
+    .program-card-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 20px;
+      color: #ffffff;
+    }
+
+    .program-card-title {
+      font-size: 1.8rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .program-card-link {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(6px);
+      padding: 8px 18px;
+      border-radius: 20px;
+      display: inline-block;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      transition: all 0.25s ease;
+    }
+
+    .program-card:hover .program-card-link {
+      background: #ffffff;
+      color: var(--primary-red);
+    }
+
+    /* ==========================================
+       BLOC 5 : METODOLOGÍA & NIVELES
+       ========================================== */
+    .levels-section {
+      padding: 80px 0;
+      background: linear-gradient(135deg, var(--primary-red) 0%, #6b040e 100%);
+      color: #ffffff;
+      text-align: center;
+    }
+
+    .levels-header { margin-bottom: 50px; }
+
+    .levels-subtitle {
+      font-size: 0.85rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.85);
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .levels-title {
+      font-size: 2.3rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 16px;
+    }
+
+    .levels-desc {
+      font-size: 1.05rem;
+      color: rgba(255, 255, 255, 0.9);
+      max-width: 750px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .levels-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+
+    .level-card {
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 16px;
+      padding: 28px 16px;
+      text-align: center;
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .level-card:hover {
+      transform: translateY(-8px);
+      background: rgba(255, 255, 255, 0.22);
+      border-color: rgba(255, 255, 255, 0.5);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+    }
+
+    .level-badge {
+      background: #ffffff;
+      color: var(--primary-red);
+      font-weight: 800;
+      font-size: 0.85rem;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 18px;
+    }
+
+    .level-name {
+      font-size: 1.15rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+      color: #ffffff;
+    }
+
+    .level-text {
+      font-size: 0.82rem;
+      color: rgba(255, 255, 255, 0.88);
+      line-height: 1.45;
+    }
+
+    .levels-action { display: flex; justify-content: center; margin-top: 10px; }
+
+    .btn-mas-idiomas {
+      background-color: #ffffff;
+      color: var(--primary-red);
+      font-weight: 800;
+      font-size: 1rem;
+      padding: 14px 36px;
+      border-radius: 30px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .btn-mas-idiomas:hover {
+      background-color: var(--bg-light);
+      transform: translateY(-3px);
+    }
+
+    /* ==========================================
+       BLOC 6 : CURSOS DESTACADOS
+       ========================================== */
+    .featured-courses-section {
+      padding: 90px 0;
+      background-color: var(--bg-light);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .featured-header { text-align: center; margin-bottom: 50px; }
+
+    .featured-subtitle {
+      color: var(--primary-red);
+      font-weight: 800;
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .featured-title { font-size: 2.2rem; font-weight: 800; color: var(--text-dark); }
+
+    .course-card-wrapper { max-width: 950px; margin: 0 auto; position: relative; }
+    .course-card-container { position: relative; min-height: 380px; }
+
+    .course-card-item {
+      display: none;
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 35px 35px 35px 340px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+      position: relative;
+      border: 1px solid var(--border-color);
+    }
+
+    .course-card-item.active { display: block; animation: fadeIn 0.35s ease-in-out; }
+
+    .course-card-img {
+      position: absolute;
+      top: -20px;
+      left: -20px;
+      width: 320px;
+      height: 340px;
+      border-radius: 20px;
+      object-fit: cover;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+    }
+
+    .course-card-date {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--primary-red);
+      font-size: 0.88rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .course-card-heading {
+      font-size: 1.7rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      line-height: 1.3;
+      margin-bottom: 16px;
+    }
+
+    .course-card-description {
+      color: var(--text-muted);
+      font-size: 0.98rem;
+      line-height: 1.7;
+      margin-bottom: 28px;
+    }
+
+    .btn-course-info {
+      background-color: var(--primary-red);
+      color: #ffffff;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 25px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-course-info:hover {
+      background-color: var(--primary-red-hover);
+      transform: translateY(-2px);
+    }
+
+    .course-slider-nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 35px;
+    }
+
+    .btn-slider-control {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      color: var(--text-dark);
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-slider-control:hover {
+      background: var(--primary-red);
+      color: #ffffff;
+      border-color: var(--primary-red);
+    }
+
+    .course-slider-counter { font-weight: 700; font-size: 1rem; color: var(--text-muted); }
+
+    /* ==========================================
+       BLOC 7 : METODOLOGÍA & HORARIOS
+       ========================================== */
+    .methodology-section {
+      padding: 85px 0;
+      background-color: var(--bg-white);
+      border-bottom: 1px solid var(--border-color);
+      text-align: center;
+    }
+
+    .methodology-header { max-width: 800px; margin: 0 auto 40px auto; }
+
+    .methodology-subtitle {
+      color: var(--primary-red);
+      font-weight: 800;
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .methodology-title { font-size: 2.3rem; font-weight: 800; color: var(--text-dark); margin-bottom: 14px; }
+    .methodology-desc { font-size: 1.05rem; color: var(--text-muted); line-height: 1.6; }
+
+    .methodology-image-wrapper {
+      max-width: 820px;
+      margin: 0 auto 55px auto;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+      border: 1px solid var(--border-color);
+    }
+
+    .methodology-banner-img { width: 100%; height: 380px; object-fit: cover; display: block; }
+
+    .methodology-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      text-align: left;
+    }
+
+    .methodology-card {
+      background: var(--bg-light);
+      border-radius: 16px;
+      padding: 28px 24px;
+      border: 1px solid var(--border-color);
+      display: flex;
+      gap: 18px;
+      align-items: flex-start;
+      transition: all 0.3s ease;
+    }
+
+    .methodology-card:hover {
+      transform: translateY(-5px);
+      background: #ffffff;
+      box-shadow: var(--shadow-md);
+      border-color: rgba(161, 7, 21, 0.3);
+    }
+
+    .methodology-icon-box {
+      width: 48px;
+      height: 48px;
+      min-width: 48px;
+      border-radius: 12px;
+      background-color: var(--primary-red);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+    }
+
+    .methodology-card-content h3 { font-size: 1.1rem; font-weight: 800; color: var(--text-dark); margin-bottom: 8px; }
+    .methodology-card-content p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.55; }
+
+    /* ==========================================
+       BLOC 8 : SECTION CONTACTO
+       ========================================== */
+    .contact-section {
+      padding: 85px 0;
+      background-color: var(--bg-light);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .contact-header { text-align: center; margin-bottom: 50px; }
+    .contact-title { font-size: 2.3rem; font-weight: 800; color: var(--text-dark); margin-bottom: 12px; }
+    .contact-subtitle { color: var(--text-muted); font-size: 1.05rem; }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.3fr;
+      gap: 50px;
+      align-items: start;
+    }
+
+    .contact-info-title { font-size: 1.25rem; font-weight: 800; color: var(--text-dark); margin-bottom: 28px; }
+    .contact-info-list { display: flex; flex-direction: column; gap: 24px; }
+    .contact-info-item { display: flex; items-center: center; gap: 16px; }
+    .contact-icon-box {
+      width: 48px;
+      height: 48px;
+      min-width: 48px;
+      border-radius: 12px;
+      background-color: #e6f4f1;
+      color: #0f766e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+
+    .contact-info-label {
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: var(--text-muted);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .contact-info-value {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .contact-info-value:hover { color: var(--primary-red); }
+
+    .contact-card {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 38px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      border: 1px solid var(--border-color);
+    }
+
+    .contact-form .form-group { margin-bottom: 20px; }
+    .contact-form label { display: block; font-size: 0.85rem; font-weight: 700; color: var(--text-dark); margin-bottom: 8px; }
+    .contact-form label span { color: var(--primary-red); }
+
+    .contact-form input, .contact-form textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      font-size: 0.92rem;
+      font-family: inherit;
+      color: var(--text-dark);
+      background: #ffffff;
+    }
+
+    .contact-form input:focus, .contact-form textarea:focus {
+      outline: none;
+      border-color: var(--primary-red);
+      box-shadow: 0 0 0 3px rgba(161, 7, 21, 0.12);
+    }
+
+    .contact-form textarea { resize: vertical; min-height: 120px; }
+
+    .captcha-box {
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      padding: 12px 16px;
+      background: #f9fafb;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 22px;
+      font-size: 0.85rem;
+    }
+
+    .captcha-checkbox { width: 20px !important; height: 20px !important; cursor: pointer; }
+
+    .btn-send-contact {
+      background-color: var(--primary-red);
+      color: #ffffff;
+      border: none;
+      padding: 14px 32px;
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .btn-send-contact:hover {
+      background-color: var(--primary-red-hover);
+      transform: translateY(-2px);
+    }
+
+    /* ==========================================
+       STYLES DES SOUS-PAGES DÉDIÉES
+       ========================================== */
+    .subpage-hero {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      color: #ffffff;
+      padding: 60px 0;
+      border-bottom: 4px solid var(--primary-red);
+    }
+
+    .btn-back-home {
+      background: rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 8px 18px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.85rem;
+      margin-bottom: 25px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-back-home:hover {
+      background: var(--primary-red);
+      border-color: var(--primary-red);
+    }
+
+    .subpage-badge {
+      display: inline-block;
+      background-color: var(--primary-red);
+      color: #ffffff;
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 5px 12px;
+      border-radius: 6px;
+      letter-spacing: 1.5px;
+      margin-bottom: 15px;
+    }
+
+    .subpage-title {
+      font-size: 2.3rem;
+      font-weight: 800;
+      margin-bottom: 15px;
+      line-height: 1.25;
+    }
+
+    .subpage-lead {
+      font-size: 1.1rem;
+      color: #cbd5e1;
+      max-width: 800px;
+      line-height: 1.6;
+    }
+
+    .subpage-content {
+      padding: 70px 0;
+      background-color: var(--bg-white);
+    }
+
+    .subpage-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 45px;
+      align-items: start;
+    }
+
+    .subpage-section-title {
+      font-size: 1.7rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      margin-bottom: 18px;
+    }
+
+    .subpage-text {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 40px;
+    }
+
+    .course-modules {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .modules-heading {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      margin-bottom: 10px;
+    }
+
+    .module-card {
+      background: var(--bg-light);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 22px;
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      transition: transform 0.2s ease;
+    }
+
+    .module-card:hover {
+      transform: translateX(6px);
+      border-color: rgba(161, 7, 21, 0.4);
+    }
+
+    .module-number {
+      background: var(--primary-red);
+      color: #ffffff;
+      font-size: 1.1rem;
+      font-weight: 800;
+      width: 44px;
+      height: 44px;
+      min-width: 44px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .module-info h4 {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      margin-bottom: 6px;
+    }
+
+    .module-info p {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .sidebar-card {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+      position: sticky;
+      top: 100px;
+    }
+
+    .sidebar-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      margin-bottom: 20px;
+      border-bottom: 2px solid var(--border-color);
+      padding-bottom: 10px;
+    }
+
+    .sidebar-info-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+
+    .sidebar-info-list li {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+    }
+
+    .sidebar-info-list strong { color: var(--text-dark); }
+
+    .btn-enroll-now {
+      width: 100%;
+      background-color: var(--primary-red);
+      color: #ffffff;
+      border: none;
+      padding: 14px;
+      border-radius: 30px;
+      font-weight: 800;
+      font-size: 0.95rem;
+      cursor: pointer;
+      margin-bottom: 12px;
+      transition: all 0.25s ease;
+    }
+
+    .btn-enroll-now:hover {
+      background-color: var(--primary-red-hover);
+      transform: translateY(-2px);
+    }
+
+    .btn-whatsapp-ask {
+      display: block;
+      width: 100%;
+      text-align: center;
+      background-color: #25d366;
+      color: #ffffff;
+      text-decoration: none;
+      padding: 12px;
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    /* ==========================================
+       BLOC 9 : FOOTER
+       ========================================== */
+    .main-footer {
+      background-color: #22252a;
+      color: #a0a6b1;
+      padding: 75px 0 30px 0;
+      font-size: 0.9rem;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.8fr 1fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 50px;
+    }
+
+    .footer-brand { display: flex; flex-direction: column; gap: 16px; }
+
+    .footer-logo-container { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+
+    .footer-logo-text { font-size: 1.05rem; font-weight: 800; color: #ffffff; line-height: 1.2; }
+    .footer-tagline { color: #a0a6b1; line-height: 1.6; font-size: 0.88rem; max-width: 340px; }
+
+    .footer-socials { display: flex; gap: 10px; margin-top: 5px; }
+
+    .social-circle-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: all 0.25s ease;
+    }
+
+    .social-circle-btn svg { width: 18px; height: 18px; fill: #ffffff; }
+    .social-circle-btn:hover { background: var(--primary-red); transform: translateY(-3px); }
+
+    .footer-col-title {
+      color: #ffffff;
+      font-size: 0.95rem;
+      font-weight: 800;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      margin-bottom: 22px;
+    }
+
+    .footer-links-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .footer-links-list a { color: #a0a6b1; text-decoration: none; transition: color 0.2s ease; cursor: pointer; font-size: 0.9rem; }
+    .footer-links-list a:hover { color: #ffffff; }
+
+    .footer-contact-item { display: flex; align-items: center; gap: 10px; color: #a0a6b1; text-decoration: none; font-size: 0.9rem; }
+    .footer-contact-item:hover { color: #ffffff; }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 25px;
+      text-align: center;
+      font-size: 0.82rem;
+      color: #717782;
+    }
+
+    /* MODALES */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(4px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+      padding: 20px;
+    }
+
+    .modal-overlay.active { display: flex; }
+
+    .modal-close-btn {
+      position: absolute;
+      top: 15px;
+      right: 18px;
+      background: rgba(0,0,0,0.05);
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      cursor: pointer;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-card {
+      background: #ffffff;
+      width: 100%;
+      max-width: 850px;
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      box-shadow: var(--shadow-lg);
+      position: relative;
+    }
+
+    .modal-left {
+      width: 45%;
+      background: linear-gradient(135deg, rgba(161, 7, 21, 0.92), rgba(15, 23, 42, 0.88)), url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=800&auto=format&fit=crop') center/cover;
+      padding: 40px 30px;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .modal-right { width: 55%; padding: 40px 35px; display: flex; flex-direction: column; justify-content: center; }
+    .modal-title { font-size: 1.5rem; color: var(--text-dark); margin-bottom: 20px; text-align: center; }
+    .modal-form .form-group { margin-bottom: 16px; }
+    .modal-form label { display: block; font-size: 0.8rem; font-weight: 600; margin-bottom: 6px; }
+
+    .input-icon-wrapper { position: relative; }
+    .input-icon-wrapper span { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 0.9rem; color: var(--text-muted); }
+    .modal-form input { width: 100%; padding: 10px 12px 10px 36px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.85rem; }
+
+    .forgot-link { display: block; text-align: right; font-size: 0.75rem; color: var(--primary-red); text-decoration: none; margin-top: 6px; margin-bottom: 18px; }
+    .btn-submit-login { width: 100%; background: var(--primary-red); color: #ffffff; border: none; padding: 12px; border-radius: 8px; font-weight: 700; cursor: pointer; }
+    
+    .modal-divider { text-align: center; margin: 20px 0 15px 0; position: relative; }
+    .modal-divider::before { content: ''; position: absolute; top: 50%; left: 0; width: 100%; height: 1px; background: var(--border-color); }
+    .modal-divider span { background: #ffffff; padding: 0 10px; position: relative; z-index: 2; font-size: 0.75rem; color: var(--text-muted); }
+
+    .btn-create-account { width: 100%; background: transparent; color: var(--primary-red); border: 1.5px solid var(--primary-red); padding: 10px; border-radius: 8px; font-weight: 700; cursor: pointer; }
+
+    /* RESPONSIVE DESIGN */
+    @media (max-width: 1024px) {
+      .programs-grid { grid-template-columns: repeat(1, 1fr); }
+      .levels-grid { grid-template-columns: repeat(3, 1fr); }
+      .methodology-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .nav-links { display: none; position: absolute; top: 100%; left: 0; width: 100%; background: #ffffff; flex-direction: column; padding: 20px; box-shadow: var(--shadow-md); }
+      .nav-links.active { display: flex; }
+      .mobile-toggle { display: block; }
+    }
+
+    @media (max-width: 900px) {
+      .subpage-grid { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .course-card-item { padding: 260px 25px 30px 25px; margin-top: 100px; }
+      .course-card-img { top: -90px; left: 50%; transform: translateX(-50%); width: 90%; height: 220px; }
+    }
+
+    @media (max-width: 640px) {
+      .levels-grid { grid-template-columns: repeat(1, 1fr); }
+      .methodology-grid { grid-template-columns: repeat(1, 1fr); }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ==========================================
+   MODALES DE RECHERCHE & CARRITO
+   ========================================== */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(6px);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  padding: 20px;
+}
+
+.modal-overlay.active {
+  display: flex;
+}
+
+.modal-close-btn-round {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: #f1f5f9;
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 1rem;
+  cursor: pointer;
+  color: #475569;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  z-index: 10;
+}
+
+.modal-close-btn-round:hover {
+  background: #e2e8f0;
+}
+
+/* --- RECHERCHE --- */
+.search-modal-card {
+  background: #ffffff;
+  width: 100%;
+  max-width: 650px;
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+  position: relative;
+  animation: modalScale 0.25s ease-out;
+}
+
+.search-input-container {
+  display: flex;
+  align-items: center;
+  padding: 22px 28px;
+  gap: 16px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.search-icon-red {
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+}
+
+.search-input-container input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 1.15rem;
+  font-family: inherit;
+  font-weight: 500;
+  color: #1e293b;
+}
+
+.search-input-container input::placeholder {
+  color: #94a3b8;
+}
+
+.esc-badge-box {
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 6px 12px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #64748b;
+}
+
+.search-results-box {
+  max-height: 280px;
+  overflow-y: auto;
+  padding: 10px 20px;
+}
+
+.search-result-item {
+  padding: 12px 16px;
+  border-bottom: 1px solid #f1f5f9;
+  cursor: pointer;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background 0.2s;
+}
+
+.search-result-item:hover {
+  background: #f8fafc;
+}
+
+.search-result-title {
+  font-weight: 700;
+  color: #0f172a;
+  font-size: 0.95rem;
+}
+
+.search-result-category {
+  font-size: 0.75rem;
+  background: #e2e8f0;
+  color: #475569;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-weight: 700;
+}
+
+.no-results {
+  padding: 20px;
+  text-align: center;
+  color: #94a3b8;
+  font-size: 0.9rem;
+}
+
+.search-modal-footer {
+  padding: 16px 28px;
+  background: #fafafa;
+  font-size: 0.88rem;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.key-badge {
+  background: #e2e8f0;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #475569;
+}
+
+/* --- CARRITO --- */
+.cart-modal-card {
+  background: #ffffff;
+  width: 100%;
+  max-width: 540px;
+  border-radius: 28px;
+  padding: 50px 35px 40px 35px;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+  position: relative;
+  animation: modalScale 0.25s ease-out;
+}
+
+.cart-modal-title {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 12px;
+}
+
+.cart-modal-desc {
+  font-size: 1rem;
+  color: #64748b;
+  line-height: 1.6;
+  max-width: 420px;
+  margin: 0 auto 32px auto;
+}
+
+.btn-ver-programa {
+  background-color: #a10715;
+  color: #ffffff;
+  border: none;
+  padding: 14px 36px;
+  border-radius: 30px;
+  font-weight: 800;
+  font-size: 0.98rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 6px 20px
+  }
+  </style>
+</head>
+<body>
+
+  <!-- BOUTONS FLOTTANTS : WHATSAPP, FACEBOOK, INSTAGRAM ET SCROLL TOP -->
+  <div class="floating-actions">
+    <button class="floating-btn btn-scroll-top" onclick="scrollToTop()" title="Volver arriba">↑</button>
+    
+    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="floating-btn btn-facebook" title="Facebook">
+      <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+    </a>
+
+    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="floating-btn btn-instagram" title="Instagram">
+      <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+    </a>
+
+    <a href="https://wa.me/18299986893" target="_blank" rel="noopener noreferrer" class="floating-btn btn-whatsapp" title="WhatsApp">
+      <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+    </a>
+  </div>
+
+  <!-- PAGE 1 : INICIO -->
+  <div id="page-inicio" class="page active">
+    
+    <!-- BLOC 1: BARRE SUPERIEURE -->
+    <div class="top-bar">
+      <div class="container">
+        <div class="top-bar-tagline">
+          🚀 <span>Domina los idiomas y la tecnología: impulsa tu futuro hoy</span>
+        </div>
+        <button class="btn-aula" onclick="openModal('loginModal')">
+          ↳ Aula Virtual
+        </button>
+      </div>
+    </div>
+
+    <!-- BLOC 1: HEADER & NAVIGATION -->
+    <header class="main-header">
+      <div class="container header-container">
+        
+        <div class="logo-container" onclick="showPage('inicio')">
+          <img src="https://raw.githubusercontent.com/eduardkarls2065-create/SchoolTL/main/TLC_png%20logo.png" alt="Logo TLC" width="80">
+          <div>
+            <span class="logo-text">Technological & Language Center</span>
+            <small class="logo-subtext">Educación de vanguardia e innovación</small>
+          </div>
+        </div>
+
+        <ul class="nav-links" id="navLinks">
+          <li><a onclick="goToSection('welcome-section')">¿Quiénes somos?</a></li>
+          <li><a onclick="goToSection('programs-section')">Programas</a></li>
+          <li><a onclick="goToSection('levels-section')">Metodología</a></li>
+          <li><a onclick="goToSection('contact-section')">Contáctanos</a></li>
+        </ul>
+
+        <div class="header-actions">
+          <button class="icon-btn" title="Buscar" onclick="openModal('searchModal')">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          </button>
+
+          <button class="icon-btn" title="Carrito" onclick="openModal('cartModal')">
+            <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+          </button>
+
+          <button class="btn-login" onclick="openModal('loginModal')">Iniciar sesión</button>
+          <button class="btn-inscribete" onclick="showPage('inscribete')">Inscríbete</button>
+          <button class="mobile-toggle" onclick="toggleMobileMenu()">☰</button>
+        </div>
+
+      </div>
+    </header>
+
+    <!-- BLOC 2: HERO SLIDER -->
+    <section class="hero-slider">
+      <button class="slider-arrow arrow-prev" onclick="moveSlide(-1)">❮</button>
+      <button class="slider-arrow arrow-next" onclick="moveSlide(1)">❯</button>
+
+      <div class="slider-container" id="sliderContainer">
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1543269865-cbf427effbad?q=80&w=1600&auto=format&fit=crop');">
+          <div class="slide-overlay"></div>
+          <div class="container">
+            <div class="slide-content">
+              <span class="badge-tag">FORMACIÓN MULTILINGÜE A1–C2</span>
+              <h1 class="slide-title">Domina los Idiomas del Mundo</h1>
+              <p class="slide-description">Aprende Inglés, Español, Francés, Portugués, Criollo Haitiano y Ruso con profesores nativos. Clases interactivas 100% online.</p>
+              <button class="btn-conoce-mas" onclick="goToSection('programs-section')">Conoce más <span>→</span></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1600&auto=format&fit=crop');">
+          <div class="slide-overlay"></div>
+          <div class="container">
+            <div class="slide-content">
+              <span class="badge-tag">TECNOLOGÍA E INTELIGENCIA ARTIFICIAL</span>
+              <h1 class="slide-title">Construye el Futuro Digital</h1>
+              <p class="slide-description">Especialízate en programación, Inteligencia Artificial, informática y diseño digital para impulsar tu carrera.</p>
+              <button class="btn-conoce-mas" onclick="showPage('curso-ia')">Conoce más <span>→</span></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1600&auto=format&fit=crop');">
+          <div class="slide-overlay"></div>
+          <div class="container">
+            <div class="slide-content">
+              <span class="badge-tag">CERTIFICACIÓN INTERNACIONAL</span>
+              <h1 class="slide-title">Aprende a Tu Ritmo 24/7</h1>
+              <p class="slide-description">Obtén un certificado avalado para potenciar tu CV. Plataforma interactiva con acceso las 24 horas.</p>
+              <button class="btn-conoce-mas" onclick="goToSection('levels-section')">Conoce más <span>→</span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slider-dots">
+        <span class="dot active" onclick="goToSlide(0)"></span>
+        <span class="dot" onclick="goToSlide(1)"></span>
+        <span class="dot" onclick="goToSlide(2)"></span>
+      </div>
+    </section>
+
+    <!-- BLOC 3 : PRESENTACIÓN (BIENVENIDA) -->
+    <section class="welcome-section">
+      <div class="container">
+        <div class="welcome-content">
+          <span class="welcome-subtitle">TECHNOLOGICAL AND LANGUAGE CENTER</span>
+          <h2 class="welcome-title">Bienvenido a Nuestra Plataforma Educativa de Vanguardia</h2>
+          <p class="welcome-text">
+            En <strong>Technological and Language Center (TLC)</strong> impulsamos la excelencia académica conectando el dominio técnico con la comunicación global. Preparamos a nuestros estudiantes para liderar el futuro mediante el dominio práctico de la <strong>Inteligencia Artificial</strong> y las herramientas tecnológicas más avanzadas. Para potenciar estas competencias, ofrecemos formación multilingüe en <strong>Inglés, Ruso, Portugués, Criollo Haitiano y Español para Extranjeros</strong>. Todo desde República Dominicana, con flexibilidad total 24/7.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- BLOC 4 : PROGRAMAS ACADÉMICOS -->
+    <section class="programs-section" id="programs-section">
+      <div class="container">
+        <div class="programs-header">
+          <span class="programs-subtitle">NUESTRA OFERTA ACADÉMICA</span>
+          <h2 class="programs-title">Explora Nuestros Programas de Formación</h2>
+        </div>
+
+        <div class="programs-grid">
+          <!-- CARTE 1 : INTELIGENCIA ARTIFICIAL -->
+          <div class="program-card" onclick="showPage('curso-ia')" style="background-image: url('https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=1200&auto=format&fit=crop');">
+            <div class="program-card-overlay"></div>
+            <div class="program-card-content">
+              <h3 class="program-card-title">INTELIGENCIA ARTIFICIAL</h3>
+              <span class="program-card-link">Ver programa →</span>
+            </div>
+          </div>
+
+          <!-- CARTE 2 : IDIOMAS -->
+          <div class="program-card" onclick="showPage('curso-idiomas')" style="background-image: url('https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?q=80&w=1200&auto=format&fit=crop');">
+            <div class="program-card-overlay"></div>
+            <div class="program-card-content">
+              <h3 class="program-card-title">IDIOMAS</h3>
+              <span class="program-card-link">Ver programas →</span>
+            </div>
+          </div>
+
+          <!-- CARTE 3 : OTROS CURSOS -->
+          <div class="program-card" onclick="showPage('otros-cursos')" style="background-image: url('https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=1200&auto=format&fit=crop');">
+            <div class="program-card-overlay"></div>
+            <div class="program-card-content">
+              <h3 class="program-card-title">OTROS CURSOS</h3>
+              <span class="program-card-link">Ver catálogo →</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BLOC 5 : METODOLOGÍA Y NIVELES -->
+    <section class="levels-section" id="levels-section">
+      <div class="container">
+        <div class="levels-header">
+          <span class="levels-subtitle">OFRECEMOS</span>
+          <h2 class="levels-title">6 Módulos de Aprendizaje Lingüístico</h2>
+          <p class="levels-desc">Realiza tu evaluación inicial, identifica tu nivel actual y comienza tu ruta adaptada a tus metas.</p>
+        </div>
+
+        <div class="levels-grid">
+          <div class="level-card"><div class="level-badge">A1</div><h3 class="level-name">Beginner</h3><p class="level-text">Frases básicas, vocabulario esencial y presentaciones simples.</p></div>
+          <div class="level-card"><div class="level-badge">A2</div><h3 class="level-name">Elementary</h3><p class="level-text">Conversaciones rutinarias y estructuración gramatical cotidiana.</p></div>
+          <div class="level-card"><div class="level-badge">B1</div><h3 class="level-name">Intermediate</h3><p class="level-text">Manejo fluido de situaciones habituales y expresión de opiniones.</p></div>
+          <div class="level-card"><div class="level-badge">B2</div><h3 class="level-name">Upper Intermediate</h3><p class="level-text">Discusiones técnicas y entornos profesionales.</p></div>
+          <div class="level-card"><div class="level-badge">C1</div><h3 class="level-name">Advanced</h3><p class="level-text">Comunicación natural y espontánea en contextos exigentes.</p></div>
+          <div class="level-card"><div class="level-badge">C2</div><h3 class="level-name">Proficiency</h3><p class="level-text">Dominio completo equivalente a nivel nativo.</p></div>
+        </div>
+
+        <div class="levels-action">
+          <button class="btn-mas-idiomas" onclick="showPage('curso-idiomas')">Más idiomas →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- BLOC 6 : CURSOS DESTACADOS -->
+    <section class="featured-courses-section">
+      <div class="container">
+        <div class="featured-header">
+          <span class="featured-subtitle">PROGRAMAS RECOMENDADOS</span>
+          <h2 class="featured-title">Cursos Destacados de TLC</h2>
+        </div>
+
+        <div class="course-card-wrapper">
+          <div class="course-card-container">
+            <div class="course-card-item active" id="courseCard-0">
+              <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=1200&auto=format&fit=crop" alt="IA" class="course-card-img">
+              <div class="course-card-date"><span>📅 Inscripciones Abiertas — 2026</span></div>
+              <h3 class="course-card-heading">Inteligencia Artificial: Tu Primera Referencia para Innovar</h3>
+              <p class="course-card-description">Aprende a dominar modelos de IA, automatización y creación de herramientas inteligentes desde cero con acompañamiento guiado.</p>
+              <button class="btn-course-info" onclick="showPage('curso-ia')">Más información →</button>
+            </div>
+
+            <div class="course-card-item" id="courseCard-1">
+              <img src="https://images.unsplash.com/photo-1571260899304-425eee4c7efc?q=80&w=800&auto=format&fit=crop" alt="Inglés" class="course-card-img">
+              <div class="course-card-date"><span>📅 Clases en Vivo & 24/7</span></div>
+              <h3 class="course-card-heading">Inglés Profesional con Profesores de Excelencia</h3>
+              <p class="course-card-description">Equipo docente altamente capacitado y certificado internacionalmente. Garantizamos un aprendizaje enfocado en fluidez real.</p>
+              <button class="btn-course-info" onclick="showPage('curso-idiomas')">Más información →</button>
+            </div>
+
+            <div class="course-card-item" id="courseCard-2">
+              <img src="https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=800&auto=format&fit=crop" alt="Conducción" class="course-card-img">
+              <div class="course-card-date"><span>📅 Prácticas Garantizadas</span></div>
+              <h3 class="course-card-heading">Escuela de Conducción Profesional</h3>
+              <p class="course-card-description">Aprende a conducir con total seguridad. Nuestro programa teórico-práctico te prepara para obtener tu licencia con vehículos modernos.</p>
+              <button class="btn-course-info" onclick="showPage('otros-cursos')">Más información →</button>
+            </div>
+
+            <div class="course-card-item" id="courseCard-3">
+              <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?q=80&w=800&auto=format&fit=crop" alt="Belleza" class="course-card-img">
+              <div class="course-card-date"><span>📅 Taller Técnico Profesional</span></div>
+              <h3 class="course-card-heading">Curso de Belleza, Estilismo y Peluquería</h3>
+              <p class="course-card-description">Desarrolla tus habilidades en arte capilar, cortes modernos y estética integral para emprender tu propio negocio de belleza.</p>
+              <button class="btn-course-info" onclick="showPage('otros-cursos')">Más información →</button>
+            </div>
+          </div>
+
+          <div class="course-slider-nav">
+            <button class="btn-slider-control" onclick="changeCourseCard(-1)">❮</button>
+            <span class="course-slider-counter" id="courseCounter">1 / 4</span>
+            <button class="btn-slider-control" onclick="changeCourseCard(1)">❯</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BLOC 7 : FLEXIBILIDAD Y METODOLOGÍA -->
+    <section class="methodology-section">
+      <div class="container">
+        <div class="methodology-header">
+          <span class="methodology-subtitle">TÚ ELIGES CÓMO Y CUÁNDO ESTUDIAR</span>
+          <h2 class="methodology-title">Elige Tu Propio Horario con Flexibilidad Total 100% Virtual</h2>
+          <p class="methodology-desc">Adapta tu formación a tu estilo de vida. Sin horarios fijos ni presiones: aprende a tu ritmo desde cualquier lugar.</p>
+        </div>
+
+        <div class="methodology-image-wrapper">
+          <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200&auto=format&fit=crop" alt="Flexibilidad TLC" class="methodology-banner-img">
+        </div>
+
+        <div class="methodology-grid">
+          <div class="methodology-card"><div class="methodology-icon-box">⏰</div><div class="methodology-card-content"><h3>Horarios 100% A tu Medida</h3><p>Estudia de mañana, tarde o noche sin interrumpir tus compromisos diarios.</p></div></div>
+          <div class="methodology-card"><div class="methodology-icon-box">🤖</div><div class="methodology-card-content"><h3>Simuladores e IA</h3><p>Practica conversación, programación y actividades técnicas con herramientas inteligentes.</p></div></div>
+          <div class="methodology-card"><div class="methodology-icon-box">📂</div><div class="methodology-card-content"><h3>Campus Virtual 24/7</h3><p>Acceso ilimitado a guías, clases grabadas et audios descargables.</p></div></div>
+          <div class="methodology-card"><div class="methodology-icon-box">📊</div><div class="methodology-card-content"><h3>Evaluación Continua</h3><p>Mide tu avance de forma inmediata al finalizar cada módulo.</p></div></div>
+          <div class="methodology-card"><div class="methodology-icon-box">🗣️</div><div class="methodology-card-content"><h3>Tutorías y Conversación</h3><p>Sesiones en vivo e interacción constante con el equipo docente.</p></div></div>
+          <div class="methodology-card"><div class="methodology-icon-box">🎓</div><div class="methodology-card-content"><h3>Certificación al Completar</h3><p>Recibe tu certificado avalado por TLC al culminar con éxito tu programa.</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BLOC 8 : SECTION CONTACTO -->
+    <section class="contact-section" id="contact-section">
+      <div class="container">
+        <div class="contact-header">
+          <h2 class="contact-title">Contáctanos</h2>
+          <p class="contact-subtitle">¿Tienes preguntas? Escríbenos y un asesor te responderá pronto.</p>
+        </div>
+
+        <div class="contact-grid">
+          <div class="contact-info-col">
+            <h3 class="contact-info-title">Información de contacto</h3>
+            <div class="contact-info-list">
+              <div class="contact-info-item">
+                <div class="contact-icon-box">📞</div>
+                <div><span class="contact-info-label">TELÉFONO</span><a href="tel:8299986893" class="contact-info-value">829 998 6893</a></div>
+              </div>
+              <div class="contact-info-item">
+                <div class="contact-icon-box">✉️</div>
+                <div><span class="contact-info-label">EMAIL</span><a href="mailto:info@tlcrd.com" class="contact-info-value">info@tlcrd.com</a></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-card">
+            <form class="contact-form" onsubmit="event.preventDefault(); alert('¡Gracias por comunicarte con TLC! Tu mensaje ha sido enviado.');">
+              <div class="form-group"><label>Nombre completo <span>*</span></label><input type="text" placeholder="Tu nombre" required></div>
+              <div class="form-group"><label>Correo electrónico <span>*</span></label><input type="email" placeholder="tu@email.com" required></div>
+              <div class="form-group"><label>Teléfono</label><input type="tel" placeholder="829-000-0000"></div>
+              <div class="form-group"><label>¿Cómo podemos ayudarte? <span>*</span></label><textarea placeholder="Cuéntanos qué necesitas..." required></textarea></div>
+              <div class="captcha-box"><input type="checkbox" class="captcha-checkbox" required><label style="margin: 0;">I'm not a robot</label></div>
+              <div><button type="submit" class="btn-send-contact">➔ Enviar</button></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ==========================================
+       SOUS-PAGE 1 : INTELIGENCIA ARTIFICIAL (PLAN COMPLET)
+       ========================================== -->
+  <div id="page-curso-ia" class="page">
+    <section class="subpage-hero">
+      <div class="container">
+        <button class="btn-back-home" onclick="showPage('inicio')">← Volver al Inicio</button>
+        <span class="subpage-badge">PROGRAMA AVANZADO DE IA</span>
+        <h1 class="subpage-title">Inteligencia Artificial Aplicada: Más Allá de los Prompts</h1>
+        <p class="subpage-lead">
+          Domina la integración de IA en flujos de trabajo reales, automatización de procesos, agentes autónomos y análisis de datos sin limitarte a simples consultas en ChatGPT.
+        </p>
+      </div>
+    </section>
+
+    <section class="subpage-content">
+      <div class="container subpage-grid">
+        <div class="subpage-main">
+          <h2 class="subpage-section-title">¿Qué aprenderás en este programa?</h2>
+          <p class="subpage-text">
+            Este curso está diseñado para profesionales que buscan aprovechar el verdadero poder transformador de la Inteligencia Artificial. Aprenderás a construir soluciones automatizadas, integrar APIs de modelos de lenguaje en proyectos de software y optimizar flujos operativos en empresas.
+          </p>
+
+          <div class="course-modules">
+            <h3 class="modules-heading">Plan de Estudio Detallado</h3>
+
+            <div class="module-card">
+              <div class="module-number">01</div>
+              <div class="module-info">
+                <h4>Fundamentos e Infraestructura de Modelos GenAI</h4>
+                <p>Comprensión de arquitecturas de Transformers, embeddings, LLMs locales y arquitecturas RAG (Retrieval-Augmented Generation).</p>
+              </div>
+            </div>
+
+            <div class="module-card">
+              <div class="module-number">02</div>
+              <div class="module-info">
+                <h4>Prompt Engineering Avanzado & Estructuración de Datos</h4>
+                <p>Técnicas de Few-Shot, Chain-of-Thought, formateo en JSON/XML para integración directa con software empresarial.</p>
+              </div>
+            </div>
+
+            <div class="module-card">
+              <div class="module-number">03</div>
+              <div class="module-info">
+                <h4>Automatización y Agentes Inteligentes Autónomos</h4>
+                <p>Creación de agentes de IA con AutoGen, LangChain y CrewAI para delegar tareas complejas de múltiples pasos.</p>
+              </div>
+            </div>
+
+            <div class="module-card">
+              <div class="module-number">04</div>
+              <div class="module-info">
+                <h4>Integración de APIs y Desarrollo No-Code / Low-Code</h4>
+                <p>Conexión de modelos de OpenAI, Anthropic y DeepSeek con herramientas corporativas mediante Make, n8n y Python.</p>
+              </div>
+            </div>
+
+            <div class="module-card">
+              <div class="module-number">05</div>
+              <div class="module-info">
+                <h4>Ética, Gobernanza y Seguridad en IA</h4>
+                <p>Privacidad de datos empresariales, prevención de alucinaciones y cumplimiento normativo para implementación industrial.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <aside class="subpage-sidebar">
+          <div class="sidebar-card">
+            <h3 class="sidebar-title">Detalles del Programa</h3>
+            <ul class="sidebar-info-list">
+              <li><strong>Duración:</strong> 8 Semanas (60 Horas)</li>
+              <li><strong>Modalidad:</strong> 100% Virtual / En Vivo</li>
+              <li><strong>Horarios:</strong> Flexibles (Mañana / Noche)</li>
+              <li><strong>Requisitos:</strong> Conocimientos básicos de informática</li>
+              <li><strong>Certificación:</strong> Avalada por TLC</li>
+            </ul>
+            <button class="btn-enroll-now" onclick="showPage('inscribete')">Inscribirme a este Programa</button>
+            <a href="https://wa.me/18299986893" target="_blank" class="btn-whatsapp-ask">Consultar por WhatsApp</a>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </div>
+
+  <!-- ==========================================
+       SOUS-PAGE 2 : IDIOMAS (STRUCTURE MODÈLE PRÊTE)
+       ========================================== -->
+ <!-- ==========================================
+     SOUS-PAGE 2 : PROGRAMA DE IDIOMAS
+     ========================================== -->
+<div id="page-curso-idiomas" class="page">
+  
+  <!-- HERO BANNER DE LA SOUS-PAGE -->
+  <section class="subpage-hero">
+    <div class="container">
+      <button class="btn-back-home" onclick="showPage('inicio')">← Volver al Inicio</button>
+      <span class="subpage-badge">FORMACIÓN MULTILINGÜE PROFESIONAL</span>
+      <h1 class="subpage-title">Programas Intensivos de Idiomas por Niveles</h1>
+      <p class="subpage-lead">
+        Profesores altamente calificados. Domina el idioma de tu elección con clases 100% interactivas y horarios totalmente adaptados a tu disponibilidad.
+      </p>
+    </div>
+  </section>
+
+  <!-- CONTENU PRINCIPAL DE LA SOUS-PAGE -->
+  <section class="subpage-content">
+    <div class="container subpage-grid">
+      
+      <!-- COLONNE GAUCHE : OFERTA DE IDIOMAS Y PLAN DE ESTUDIO -->
+      <div class="subpage-main">
+        
+        <h2 class="subpage-section-title">Nuestra Oferta Lingüística</h2>
+        <p class="subpage-text">
+          En <strong>Technological and Language Center (TLC)</strong> te preparamos para destacar en el mercado laboral global y académico. Ofrecemos programas diseñados bajo el Marco Común Europeo de Referencia (A1 a C2), enfocados en la fluidez conversacional, gramática práctica y pronunciación real.
+        </p>
+
+        <!-- LISTE DES LANGUES DISPONIBLES -->
+        <div class="course-modules">
+          <h3 class="modules-heading">Idiomas Disponibles</h3>
+
+          <!-- 1. INGLÉS -->
+          <div class="module-card">
+            <div class="module-number">🇬🇧</div>
+            <div class="module-info">
+              <h4>Inglés por Niveles (A1 – C2)</h4>
+              <p>Inglés conversacional, técnico y de negocios con profesores altamente capacitados. Enfoque en empleabilidad, entrevistas laborales y preparación para certificaciones internacionales.</p>
+            </div>
+          </div>
+
+          <!-- 2. ESPAÑOL PARA EXTRANJEROS -->
+          <div class="module-card">
+            <div class="module-number">🇪🇸</div>
+            <div class="module-info">
+              <h4>Español para Extranjeros</h4>
+              <p>Programa inmersivo diseñado para profesionales, estudiantes e inmigrantes que buscan dominar el español hablado y escrito con fluidez y precisión cultural.</p>
+            </div>
+          </div>
+
+          <!-- 3. ITALIANO -->
+          <div class="module-card">
+            <div class="module-number">🇮🇹</div>
+            <div class="module-info">
+              <h4>Clases de Italiano</h4>
+              <p>Aprende italiano desde nivel inicial hasta avanzado. Ideal para turismo, negocios, estudios superiores y enriquecimiento cultural.</p>
+            </div>
+          </div>
+
+          <!-- 4. FRANCÉS -->
+          <div class="module-card">
+            <div class="module-number">🇫🇷</div>
+            <div class="module-info">
+              <h4>Francés Conversacional e Instrumental</h4>
+              <p>Desarrollo de habilidades de expresión oral y escrita, lectura y comprensión auditiva para entornos académicos y corporativos.</p>
+            </div>
+          </div>
+
+          <!-- 5. CRIOLLO HAITIANO -->
+          <div class="module-card">
+            <div class="module-number">🇭🇹</div>
+            <div class="module-info">
+              <h4>Criollo Haitiano (Kreyòl Ayisyen)</h4>
+              <p>Curso práctico e interactivo diseñado para facilitar la comunicación fluida en contextos comerciales, humanitarios y de servicio al cliente.</p>
+            </div>
+          </div>
+
+          <!-- 6. PORTUGUÉS -->
+          <div class="module-card">
+            <div class="module-number">🇧🇷</div>
+            <div class="module-info">
+              <h4>Portugués Comercial y Conversacional</h4>
+              <p>Dominio rápido y fluido del portugués enfocado en relaciones comerciales, negocios de exportación y turismo internacional.</p>
+            </div>
+          </div>
+
+          <!-- 7. RUSO -->
+          <div class="module-card">
+            <div class="module-number">🇷🇺</div>
+            <div class="module-info">
+              <h4>Ruso Básico e Intermedio</h4>
+              <p>Iniciación al alfabeto cirílico, gramática estructural y conversación práctica para viajes, comercio y comunicación internacional.</p>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- BLOC DE SÉLECTION D'HORAIRES (TU ELIGES EL HORARIO) -->
+        <div style="margin-top: 45px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 16px; padding: 28px;">
+          <h3 style="font-size: 1.25rem; font-weight: 800; color: #0f172a; margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
+            <span>⏰</span> ¡Tú Eliges el Horario!
+          </h3>
+          <p style="font-size: 0.95rem; color: #64748b; margin-bottom: 20px;">
+            En TLC adaptamos la enseñanza a tu estilo de vida. Selecciona la modalidad que mejor se ajusta a tu tiempo:
+          </p>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+            <div style="background: #ffffff; padding: 16px; border-radius: 12px; border: 1px solid #e2e8f0;">
+              <strong style="color: #a10715; display: block; margin-bottom: 4px;">🌅 Tanda Mañana</strong>
+              <span style="font-size: 0.85rem; color: #64748b;">8:00 AM – 12:00 PM<br>(Lunes a Viernes)</span>
+            </div>
+            <div style="background: #ffffff; padding: 16px; border-radius: 12px; border: 1px solid #e2e8f0;">
+              <strong style="color: #a10715; display: block; margin-bottom: 4px;">🌆 Tanda Tarde/Noche</strong>
+              <span style="font-size: 0.85rem; color: #64748b;">2:00 PM – 6:00 PM<br>6:00 PM – 9:00 PM</span>
+            </div>
+            <div style="background: #ffffff; padding: 16px; border-radius: 12px; border: 1px solid #e2e8f0;">
+              <strong style="color: #a10715; display: block; margin-bottom: 4px;">📅 Sabatino / Dominical</strong>
+              <span style="font-size: 0.85rem; color: #64748b;">8:30 AM – 1:00 PM<br>2:00 PM – 6:00 PM</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- COLONNE DROITE : FICHE D'INSCRIPTION & CONTACT -->
+      <aside class="subpage-sidebar">
+        <div class="sidebar-card">
+          <h3 class="sidebar-title">Detalles de Inscripción</h3>
+          <ul class="sidebar-info-list">
+            <li><strong>Profesores:</strong> Altamente Calificados y Nativos</li>
+            <li><strong>Metodología:</strong> 100% Práctica y Conversacional</li>
+            <li><strong>Modalidad:</strong> Virtual (En Vivo) / Presencial</li>
+            <li><strong>Horarios:</strong> Flexibles a Tu Elección</li>
+            <li><strong>Certificación:</strong> Avalada por TLC</li>
+            <li><strong>Teléfono:</strong> <a href="tel:8299986893" style="color: #a10715; text-decoration: none; font-weight: 700;">829-998-6893</a></li>
+            <li><strong>Correo:</strong> info@tlcrd.com</li>
+          </ul>
+          
+          <button class="btn-enroll-now" onclick="showPage('inscribete')">Inscríbete Ya</button>
+          <a href="https://wa.me/18299986893?text=Hola,%20deseo%20más%20información%20sobre%20los%20cursos%20de%20Idiomas" target="_blank" class="btn-whatsapp-ask">Consultar por WhatsApp</a>
+        </div>
+      </aside>
+
+    </div>
+  </section>
+
+</div>
+
+  <!-- ==========================================
+       SOUS-PAGE 3 : OTROS CURSOS (STRUCTURE MODÈLE PRÊTE)
+       ========================================== -->
+<!-- ==========================================
+     SOUS-PAGE 3 : OTROS CURSOS Y TALLERES TÉCNICOS
+     ========================================== -->
+<div id="page-otros-cursos" class="page">
+  
+  <!-- HERO BANNER DE LA SOUS-PAGE -->
+  <section class="subpage-hero">
+    <div class="container">
+      <button class="btn-back-home" onclick="showPage('inicio')">← Volver al Inicio</button>
+      <span class="subpage-badge">CATÁLOGO TÉCNICO Y PROFESIONAL</span>
+      <h1 class="subpage-title">Cursos Técnicos, Talleres y Capacitación Laboral</h1>
+      <p class="subpage-lead">
+        Desarrolla habilidades prácticas de alta demanda laboral e industrial. Elige tu programa técnico con horarios adaptados y certificación avalada por TLC.
+      </p>
+    </div>
+  </section>
+
+  <!-- CONTENU PRINCIPAL DE LA SOUS-PAGE -->
+  <section class="subpage-content">
+    <div class="container subpage-grid">
+      
+      <!-- COLONNE GAUCHE : LISTE COMPLÈTE DES COURS TÉCNIQUES -->
+      <div class="subpage-main">
+        
+        <h2 class="subpage-section-title">Programas y Atelieres Disponibles</h2>
+        <p class="subpage-text">
+          Nuestra oferta técnica está diseñada para una inserción laboral rápida o para impulsar tu propio emprendimiento. Todos los cursos cuentan con prácticas guiadas, materiales especializados e instructores con experiencia industrial.
+        </p>
+
+        <!-- LISTE DES COURS TÉCENIQUES EXTRAITS DES FLYERS -->
+        <div class="course-modules">
+          <h3 class="modules-heading">Catálogo de Capacitación Especializada</h3>
+
+          <!-- 1. CONTABILIDAD -->
+          <div class="module-card">
+            <div class="module-number">📊</div>
+            <div class="module-info">
+              <h4>Contabilidad Práctica e Instrumental</h4>
+              <p>Manejo de registros contables, estados financieros, libros auxiliares y sistemas computarizados para empresas. <strong>Horario: Flexibilidad total (Tu eliges el horario).</strong></p>
+            </div>
+          </div>
+
+          <!-- 2. CLASES DE MANEJO / AUTOESCUELA -->
+          <div class="module-card">
+            <div class="module-number">🚗</div>
+            <div class="module-info">
+              <h4>Clases de Manejo (Hazte Chofer)</h4>
+              <p>Capacitación teórico-práctica para conducción segura y obtención de licencia. <strong>Duración:</strong> 8 semanas. <strong>Inscripción:</strong> $2,000 + Cuota: $2,000 (Incluye certificado y carnet de aprendizaje). Pago completo: $4,500.</p>
+            </div>
+          </div>
+
+          <!-- 3. REPARACIÓN DE PC -->
+          <div class="module-card">
+            <div class="module-number">💻</div>
+            <div class="module-info">
+              <h4>Reparación y Mantenimiento de PC y Laptops</h4>
+              <p>Diagnóstico de hardware, ensamblaje, instalación de sistemas operativos y resolución de fallas. <strong>Duración:</strong> 6 semanas. <strong>Horarios:</strong> Sáb. 9:00 AM–12:00 PM ó 2:00–5:00 PM | Mar/Jue 2:00–4:00 PM, 4:00–6:00 PM ó 6:00–8:00 PM.</p>
+            </div>
+          </div>
+
+          <!-- 4. BARBERÍA Y PELUQUERÍA -->
+          <div class="module-card">
+            <div class="module-number">💈</div>
+            <div class="module-info">
+              <h4>Barbería y Peluquería Profesional</h4>
+              <p>Técnicas de corte moderno, degradados (fades), perfilado de barba, peinado y cuidado capilar masculino. <strong>Duración:</strong> 3 meses. <strong>Horarios:</strong> Lunes, Martes o Miércoles de 2:00 PM a 6:00 PM.</p>
+            </div>
+          </div>
+
+          <!-- 5. CURSO DE BELLEZA -->
+          <div class="module-card">
+            <div class="module-number">✂️</div>
+            <div class="module-info">
+              <h4>Curso de Belleza Integral y Estilismo</h4>
+              <p>Tratamientos capilares, secado, lavado, colorimetría, peinados y técnicas de estética. <strong>Horario: Flexibilidad total (Tu eliges el horario).</strong></p>
+            </div>
+          </div>
+
+          <!-- 6. SERVICIO AL CLIENTE -->
+          <div class="module-card">
+            <div class="module-number">🎧</div>
+            <div class="module-info">
+              <h4>Servicio al Cliente y Comunicación Empresarial</h4>
+              <p>Técnicas de atención telefónica y presencial, resolución de conflictos y habilidades blandas para call centers y empresas. <strong>Duración:</strong> 5 semanas. <strong>Horarios:</strong> Lun/Mié 4:00–6:00 PM ó 6:00–8:00 PM.</p>
+            </div>
+          </div>
+
+          <!-- 7. ETIQUETA Y PROTOCOLO -->
+          <div class="module-card">
+            <div class="module-number">🤝</div>
+            <div class="module-info">
+              <h4>Etiqueta y Protocolo Profesional</h4>
+              <p>Manejo de imagen personal, comportamiento corporativo, etiqueta de mesa y organización de eventos diplomáticos y sociales. <strong>Duración:</strong> 5 semanas. <strong>Horarios:</strong> Lun/Mié 4:00–6:00 PM ó Mar/Jue 6:00–8:00 PM.</p>
+            </div>
+          </div>
+
+          <!-- 8. FABRICACIÓN DE VELONES -->
+          <div class="module-card">
+            <div class="module-number">🕯️</div>
+            <div class="module-info">
+              <h4>Fabricación de Velones y Velas Artesanales</h4>
+              <p>Taller técnico de elaboración, aromatización, pigmentación y empaque de velones decorativos y místicos. <strong>Duración:</strong> 4 semanas. <strong>Horarios:</strong> Sábados 2:00–4:00 PM ó 4:00–6:00 PM.</p>
+            </div>
+          </div>
+
+          <!-- 9. FABRICACIÓN DE PRODUCTOS QUÍMICOS -->
+          <div class="module-card">
+            <div class="module-number">🧪</div>
+            <div class="module-info">
+              <h4>Fabricación de Productos Químicos de Limpieza</h4>
+              <p>Formulación artesanal e industrial de desinfectantes, detergentes líquidos, suavizantes y desengrasantes para comercialización. <strong>Horario: Flexibilidad total (Tu eliges el horario).</strong></p>
+            </div>
+          </div>
+
+          <!-- 10. BISUTERÍA -->
+          <div class="module-card">
+            <div class="module-number">💍</div>
+            <div class="module-info">
+              <h4>Diseño y Elaboración de Bisutería</h4>
+              <p>Creación de collares, pulseras, aretes y accesorios de moda con diversas técnicas de ensamblado y alambrismo. <strong>Duración:</strong> 10 semanas. <strong>Horarios:</strong> Sábados 9:00 AM–12:00 PM / 2:00–5:00 PM | Lun/Mié/Vie 2:00–5:00 PM / 5:00–8:00 PM.</p>
+            </div>
+          </div>
+
+          <!-- 11. DIBUJO Y PINTURA -->
+          <div class="module-card">
+            <div class="module-number">🎨</div>
+            <div class="module-info">
+              <h4>Dibujo y Pintura Artística</h4>
+              <p>Técnicas de boceto, sombras, acuarela, óleo y perspectiva para niños, jóvenes y adultos. <strong>Duración:</strong> 8 semanas. <strong>Horario:</strong> Sábados de 9:00 AM a 12:00 PM.</p>
+            </div>
+          </div>
+
+          <!-- 12. MANUALIDADES -->
+          <div class="module-card">
+            <div class="module-number">✂️</div>
+            <div class="module-info">
+              <h4>Manualidades y Creación Artística</h4>
+              <p>Elaboración de adornos, arreglos festivos, foami, reciclaje creativo y decoración para eventos. <strong>Duración:</strong> 5 semanas. <strong>Horarios:</strong> Lun/Mié 2:00–4:00 PM ó 4:00–6:00 PM.</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- COLONNE DROITE : FICHE D'INSCRIPTION & CONTACT -->
+      <aside class="subpage-sidebar">
+        <div class="sidebar-card">
+          <h3 class="sidebar-title">Detalles de Admisión</h3>
+          <ul class="sidebar-info-list">
+            <li><strong>Ubicación:</strong> C/ San José # 42. Los Ríos ("COLEGIO RIACHUELO")</li>
+            <li><strong>Referencia:</strong> Entrando por el Super Mercado GELA</li>
+            <li><strong>Modalidad:</strong> Presencial / Práctica Dirigida</li>
+            <li><strong>Certificación:</strong> Avalada por TLC</li>
+            <li><strong>Teléfonos:</strong> <a href="tel:8299986893" style="color: #a10715; text-decoration: none; font-weight: 700;">829.998.6893</a> | <a href="tel:8095643840" style="color: #a10715; text-decoration: none; font-weight: 700;">809.564.3840</a></li>
+            <li><strong>Correo:</strong> info@tlcrd.com</li>
+          </ul>
+          
+          <button class="btn-enroll-now" onclick="showPage('inscribete')">Inscríbete Ya</button>
+          <a href="https://wa.me/18299986893?text=Hola,%20deseo%20más%20información%20sobre%20los%20Cursos%20Técnicos" target="_blank" class="btn-whatsapp-ask">Consultar por WhatsApp</a>
+        </div>
+      </aside>
+
+    </div>
+  </section>
+
+</div>
+<!-- MODALE DE RECHERCHE FONCTIONNELLE -->
+<div class="modal-overlay" id="searchModal">
+  <div class="search-modal-card">
+    <button class="modal-close-btn-round" onclick="closeModal('searchModal')">✕</button>
+    
+    <div class="search-input-container">
+      <svg class="search-icon-red" viewBox="0 0 24 24" fill="none" stroke="#a10715" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+      <input type="text" placeholder="Buscar programas, niveles, recursos..." id="searchInput" oninput="performSearch()">
+      <div class="esc-badge-box">
+        <span>ESC</span>
+      </div>
+    </div>
+
+    <!-- Zone d'affichage des résultats -->
+    <div id="searchResults" class="search-results-box"></div>
+
+    <div class="search-modal-footer">
+      <span class="info-icon">ⓘ</span>
+      <span>Pulsá</span>
+      <span class="key-badge">↵</span>
+      <span>para buscar</span>
+    </div>
+  </div>
+</div>
+
+<!-- MODALE DU PANIER (CARRITO DYNAMIQUE) -->
+<div class="modal-overlay" id="cartModal">
+  <div class="cart-modal-card">
+    <button class="modal-close-btn-round" onclick="closeModal('cartModal')">✕</button>
+    
+    <!-- Contenu dynamique géré par JS (vide ou liste de cours) -->
+    <div id="cartContent"></div>
+  </div>
+</div>
+
+  <!-- PAGE SECONDAIRE D'INSCRIPTION -->
+  <div id="page-inscribete" class="page">
+    <div class="container secondary-page-content">
+      <h1 class="page-title">Inscripción en Línea</h1>
+      <p class="page-description">Completa tu formulario de admisión e intégrate a la comunidad TLC.</p>
+      <button class="btn-return" onclick="showPage('inicio')">← Volver al Inicio</button>
+    </div>
+  </div>
+
+  <!-- BLOC 9 : FOOTER -->
+  <footer class="main-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-logo-container" onclick="showPage('inicio')">
+            <img src="https://raw.githubusercontent.com/eduardkarls2065-create/SchoolTL/main/TLC_png%20logo.png" alt="Logo TLC" width="50">
+            <span class="footer-logo-text">Technological &<br>Language Center</span>
+          </div>
+          <p class="footer-tagline">Technological and Language Center — Educación vanguardista e innovación multilingüe para la empleabilidad global.</p>
+          <div class="footer-socials">
+            <a href="https://facebook.com" target="_blank" class="social-circle-btn"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+            <a href="https://instagram.com" target="_blank" class="social-circle-btn"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Contáctanos</h4>
+          <ul class="footer-links-list">
+            <li><a href="tel:8299986893" class="footer-contact-item">📞 829 998 6893</a></li>
+            <li><a href="mailto:info@tlcrd.com" class="footer-contact-item">✉️ info@tlcrd.com</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Enlaces</h4>
+          <ul class="footer-links-list">
+            <li><a onclick="goToSection('welcome-section')">¿Quiénes somos?</a></li>
+            <li><a onclick="goToSection('programs-section')">Programas</a></li>
+            <li><a onclick="goToSection('levels-section')">Metodología</a></li>
+            <li><a onclick="goToSection('contact-section')">Contáctanos</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Cuenta</h4>
+          <ul class="footer-links-list">
+            <li><a onclick="openModal('loginModal')">Iniciar sesión</a></li>
+            <li><a onclick="showPage('inscribete')">Registrarse</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        © 2026 Technological and Language Center (TLC). Todos los derechos reservados.
+      </div>
+    </div>
+  </footer>
+
+  <!-- MODALES -->
+  <div class="modal-overlay" id="loginModal">
+    <div class="modal-card">
+      <button class="modal-close-btn" onclick="closeModal('loginModal')">✕</button>
+      <div class="modal-left">
+        <img src="https://raw.githubusercontent.com/eduardkarls2065-create/SchoolTL/main/TLC_png%20logo.png" alt="Logo TLC" width="80">
+        <h3>Bienvenido al Campus Virtual</h3>
+        <p>Accede a tus cursos, recursos interactivos y tutorías.</p>
+      </div>
+      <div class="modal-right">
+        <h2 class="modal-title">Log in</h2>
+        <form class="modal-form" onsubmit="event.preventDefault(); alert('Conexión en desarrollo...');">
+          <div class="form-group"><label>Username / Correo</label><div class="input-icon-wrapper"><span>👤</span><input type="text" placeholder="Username" required></div></div>
+          <div class="form-group"><label>Password / Contraseña</label><div class="input-icon-wrapper"><span>🔒</span><input type="password" placeholder="Password" required></div><a href="#" class="forgot-link">Forgotten your username or password?</a></div>
+          <button type="submit" class="btn-submit-login">Log in</button>
+        </form>
+        <div class="modal-divider"><span>Is this your first time here?</span></div>
+        <button class="btn-create-account" onclick="showPage('inscribete'); closeModal('loginModal');">Create new account</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="searchModal">
+    <div class="search-modal-card">
+      <button class="modal-close-btn" onclick="closeModal('searchModal')">✕</button>
+      <div class="search-input-header">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input type="text" placeholder="Buscar programas, niveles, recursos..." id="searchInput">
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="cartModal">
+    <div class="cart-modal-card">
+      <button class="modal-close-btn" onclick="closeModal('cartModal')">✕</button>
+      <h2 class="cart-empty-title">Tu carrito está vacío.</h2>
+      <p class="cart-empty-desc">Explorá nuestros programas y empezá tu camino en tecnología e idiomas.</p>
+      <button class="btn-action-primary" onclick="goToSection('programs-section'); closeModal('cartModal');">🛍️ Ver el programa</button>
+    </div>
+  </div>
+
+<!-- SCRIPT UNIFIÉ ET CORRIGÉ -->
+  <script>
+    /* ==========================================
+       1. INITIALISATION ET GESTION DU PANIER (CARRITO)
+       ========================================== */
+    let cart = [];
+
+    // Initialiser l'affichage du panier au chargement de la page
+    document.addEventListener('DOMContentLoaded', () => {
+      updateCartUI();
+      startAutoSlide();
+    });
+
+    function showPage(pageId) {
+  const pages = document.querySelectorAll('.page');
+  pages.forEach(p => p.classList.remove('active'));
+
+  const targetPage = document.getElementById('page-' + pageId) || document.getElementById(pageId);
+  if (targetPage) {
+    targetPage.classList.add('active');
+  } else {
+    const defaultPage = document.getElementById('page-inicio') || document.getElementById('inicio');
+    if (defaultPage) defaultPage.classList.add('active');
+  }
+
+  // Force le retour en haut de la fenêtre ET de tous les conteneurs potentiels
+  window.scrollTo(0, 0);
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
+  
+  // Si vous utilisez un conteneur défilable personnalisé, remettez-le à zéro aussi :
+  const mainContainer = document.querySelector('.main-content') || document.querySelector('body');
+  if (mainContainer) mainContainer.scrollTop = 0;
+}
+    // Navigation vers ancres de la page d'accueil
+    function goToSection(sectionId) {
+      showPage('inicio');
+      setTimeout(() => {
+        const el = document.getElementById(sectionId) || document.querySelector('.' + sectionId);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 50);
+    }
+
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /* ==========================================
+       2. MENUS ET MODALES
+       ========================================== */
+    function toggleMobileMenu() {
+      const nav = document.getElementById('navLinks');
+      if (nav) nav.classList.toggle('active');
+    }
+
+    function openModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) {
+        modal.classList.add('active');
+        if (modalId === 'searchModal') {
+          setTimeout(() => {
+            const input = document.getElementById('searchInput');
+            if (input) input.focus();
+          }, 100);
+        }
+      }
+    }
+
+    function closeModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) modal.classList.remove('active');
+    }
+
+    // Mise à jour visuelle de la modale Panier
+    function updateCartUI() {
+      const cartContainer = document.getElementById('cartContent');
+      if (!cartContainer) return;
+
+      if (cart.length === 0) {
+        cartContainer.innerHTML = `
+          <div style="margin-bottom:24px; display:flex; justify-content:center;">
+            <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#14b8a6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="9" cy="21" r="1"></circle>
+              <circle cx="20" cy="21" r="1"></circle>
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+              <line x1="9" y1="9" x2="15" y2="15"></line>
+              <line x1="15" y1="9" x2="9" y2="15"></line>
+            </svg>
+          </div>
+          <h2 class="cart-modal-title">Tu carrito está vacío.</h2>
+          <p class="cart-modal-desc">Explorá nuestros programas y empezá tu camino en tecnología e idiomas.</p>
+          <button class="btn-ver-programa" onclick="goToSection('programs-section'); closeModal('cartModal');">
+            🛍️ Ver el programa
+          </button>
+        `;
+      }
+    }
+
+    /* ==========================================
+       3. MOTEUR DE RECHERCHE EN TEMPS RÉEL
+       ========================================== */
+    const siteCoursesIndex = [
+      { title: "Inteligencia Artificial Aplicada", page: "curso-ia", category: "Tecnología" },
+      { title: "Prompt Engineering & Agentes IA", page: "curso-ia", category: "Tecnología" },
+      { title: "Inglés por Niveles (A1 - C2)", page: "curso-idiomas", category: "Idiomas" },
+      { title: "Español para Extranjeros", page: "curso-idiomas", category: "Idiomas" },
+      { title: "Clases de Italiano", page: "curso-idiomas", category: "Idiomas" },
+      { title: "Francés Conversacional", page: "curso-idiomas", category: "Idiomas" },
+      { title: "Criollo Haitiano (Kreyòl)", page: "curso-idiomas", category: "Idiomas" },
+      { title: "Portugués Comercial", page: "curso-idiomas", category: "Idiomas" },
+      { title: "Ruso Básico e Intermedio", page: "curso-idiomas", category: "Idiomas" },
+      { title: "Contabilidad Práctica", page: "otros-cursos", category: "Técnico" },
+      { title: "Clases de Manejo (Autoescuela)", page: "otros-cursos", category: "Técnico" },
+      { title: "Reparación de PC y Laptops", page: "otros-cursos", category: "Técnico" },
+      { title: "Barbería y Peluquería", page: "otros-cursos", category: "Técnico" },
+      { title: "Curso de Belleza e Estilismo", page: "otros-cursos", category: "Técnico" },
+      { title: "Servicio al Cliente", page: "otros-cursos", category: "Técnico" },
+      { title: "Fabricación de Velones", page: "otros-cursos", category: "Técnico" },
+      { title: "Productos Químicos de Limpieza", page: "otros-cursos", category: "Técnico" },
+      { title: "Bisutería", page: "otros-cursos", category: "Técnico" }
+    ];
+
+    function performSearch() {
+      const inputEl = document.getElementById('searchInput');
+      const resultsContainer = document.getElementById('searchResults');
+      
+      if (!inputEl || !resultsContainer) return;
+
+      const query = inputEl.value.toLowerCase().trim();
+      resultsContainer.innerHTML = '';
+
+      if (query === '') return;
+
+      const filtered = siteCoursesIndex.filter(item => 
+        item.title.toLowerCase().includes(query) || 
+        item.category.toLowerCase().includes(query)
+      );
+
+      if (filtered.length === 0) {
+        resultsContainer.innerHTML = '<div class="no-results">No se encontraron programas.</div>';
+        return;
+      }
+
+      filtered.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'search-result-item';
+        div.onclick = () => {
+          showPage(item.page);
+          closeModal('searchModal');
+        };
+        div.innerHTML = `
+          <span class="search-result-title">${item.title}</span>
+          <span class="search-result-category">${item.category}</span>
+        `;
+        resultsContainer.appendChild(div);
+      });
+    }
+
+    /* ==========================================
+       4. CARROUSEL HERO (SLIDER)
+       ========================================== */
+    let currentSlide = 0;
+    const totalSlides = 3;
+    let autoSlideInterval;
+
+    function updateSlider() {
+      const container = document.getElementById('sliderContainer');
+      const dots = document.querySelectorAll('.dot');
+      if (container) container.style.transform = `translateX(-${currentSlide * 33.333}%)`;
+      dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentSlide);
+      });
+    }
+
+    function moveSlide(direction) {
+      currentSlide = (currentSlide + direction + totalSlides) % totalSlides;
+      updateSlider();
+      resetAutoSlide();
+    }
+
+    function goToSlide(slideIndex) {
+      currentSlide = slideIndex;
+      updateSlider();
+      resetAutoSlide();
+    }
+
+    function startAutoSlide() {
+      autoSlideInterval = setInterval(() => {
+        currentSlide = (currentSlide + 1) % totalSlides;
+        updateSlider();
+      }, 5000);
+    }
+
+    function resetAutoSlide() {
+      clearInterval(autoSlideInterval);
+      startAutoSlide();
+    }
+
+    /* ==========================================
+       5. SLIDER DE CARTES (BLOC 6)
+       ========================================== */
+    let currentCourseIndex = 0;
+    const totalCourses = 4;
+
+    function changeCourseCard(direction) {
+      const cards = document.querySelectorAll('.course-card-item');
+      const counter = document.getElementById('courseCounter');
+      if (!cards.length) return;
+      cards[currentCourseIndex].classList.remove('active');
+      currentCourseIndex = (currentCourseIndex + direction + totalCourses) % totalCourses;
+      cards[currentCourseIndex].classList.add('active');
+      if (counter) counter.textContent = `${currentCourseIndex + 1} / ${totalCourses}`;
+    }
+
+    // Gestion globale de la touche Échap
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeModal('loginModal');
+        closeModal('searchModal');
+        closeModal('cartModal');
+      }
+    });
+  </script>
+</body>
+</html>
